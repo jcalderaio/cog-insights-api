@@ -1,0 +1,5 @@
+*.json
+public/
+node_modules/
+coverage/
+infrastructure/

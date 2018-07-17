@@ -1,0 +1,71 @@
+{
+  "name": "esante-insights-api",
+  "version": "1.0.0+00000",
+  "hash": "99999",
+  "description": "eSante Insights API",
+  "author": "Cognosante",
+  "license": "ISC",
+  "dependencies": {
+    "@cognosante/cgs-graphql-server": "^0.18.15",
+    "@cognosante/healthshare-cache-sql": "^1.0.6",
+    "apollo-link": "^1.2.2",
+    "apollo-link-http": "^1.5.4",
+    "axios": "^0.18.0",
+    "date-fns": "^1.29.0",
+    "deepmerge": "^2.1.0",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "graphql-tools": "^3.0.1",
+    "knex": "^0.14.2",
+    "moment": "^2.22.2",
+    "mysql": "^2.15.0",
+    "node-fetch": "^2.1.2",
+    "pg": "^7.4.1",
+    "tracer": "^0.8.15"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.15.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
+    "jest": "^22.4.2",
+    "jest-cli": "^22.4.2",
+    "mock-knex": "^0.4.0",
+    "nodemon": "^1.14.9",
+    "sql-formatter": "^2.1.2"
+  },
+  "scripts": {
+    "start": "nodemon  --watch ./ ./server.js",
+    "test": "jest",
+    "lint": "node ./node_modules/eslint/bin/eslint.js design --ext js,jsx  ./src",
+    "testWatch": "jest --watchAll",
+    "clean": "rm -rf ./dist",
+    "build": "rm -rf ./dist && mkdir -p ./dist  && zip -r ./dist/lambda.zip node_modules/* src/* lambda.js server.js package.json -x .git *.DS_Store* *dist* *infrastructure* *.terraform* *jest* *istanbul* *eslint* *yargs* *nodemon*",
+    "publish": "aws s3 cp ./dist/lambda.zip s3://cgs-software/esante/insights/esante-hie-api.zip",
+    "deploy": "aws lambda update-function-code --function-name esante-hie-api  --zip-file fileb://dist/lambda.zip --publish"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/coverage/**",
+      "!<rootDir>/lambda.js",
+      "!<rootDir>/server.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/lambda.js",
+      "<rootDir>/server.js"
+    ]
+  }
+}

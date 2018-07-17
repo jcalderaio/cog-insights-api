@@ -1,0 +1,10 @@
+Sources:
+  
+  census.state_fips.json (State FIPS Codes)
+  https://www2.census.gov/geo/docs/reference/state.txt
+  
+  (Processed with: http://www.convertcsv.com/csv-to-json.htm)
+
+  census.state_population.json (State Population)
+  https://api.census.gov/data/2017/pep/population?get=POP&for=state:*
+
